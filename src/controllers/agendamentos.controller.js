@@ -27,3 +27,117 @@ exports.listar = (req, res) => {
   });
 
 };
+
+exports.criar = (req, res) => {
+
+  const {
+    cliente_id,
+    servico_id,
+    data_hora,
+    observacao
+  } = req.body;
+
+  const sql = `
+    INSERT INTO agendamentos
+    (
+      cliente_id,
+      servico_id,
+      data_hora,
+      status,
+      observacao
+    )
+    VALUES
+    (
+      ?, ?, ?, 'agendado', ?
+    )
+  `;
+
+  db.query(
+    sql,
+    [
+      cliente_id,
+      servico_id,
+      data_hora,
+      observacao
+    ],
+    (err, result) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json({
+        mensagem: "Agendamento criado",
+        id: result.insertId
+      });
+
+    }
+  );
+
+};
+
+exports.atualizar = (req, res) => {
+
+  const id = req.params.id;
+
+  const {
+    data_hora,
+    status,
+    observacao
+  } = req.body;
+
+  const sql = `
+    UPDATE agendamentos
+    SET
+      data_hora = ?,
+      status = ?,
+      observacao = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [
+      data_hora,
+      status,
+      observacao,
+      id
+    ],
+    (err) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json({
+        mensagem:
+        "Agendamento atualizado"
+      });
+
+    }
+  );
+
+};
+
+exports.remover = (req, res) => {
+
+  const id = req.params.id;
+
+  db.query(
+    "DELETE FROM agendamentos WHERE id = ?",
+    [id],
+    (err) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json({
+        mensagem:
+        "Agendamento removido"
+      });
+
+    }
+  );
+
+};

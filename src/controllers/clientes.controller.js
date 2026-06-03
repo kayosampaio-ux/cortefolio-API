@@ -15,6 +15,7 @@ exports.listar = (req, res) => {
   );
 
 };
+
 exports.criar = (req, res) => {
 
   const {
