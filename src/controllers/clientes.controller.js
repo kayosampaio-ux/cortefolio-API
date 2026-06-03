@@ -15,3 +15,36 @@ exports.listar = (req, res) => {
   );
 
 };
+exports.criar = (req, res) => {
+
+  const {
+    nome,
+    email,
+    telefone
+  } = req.body;
+
+  const sql = `
+    INSERT INTO clientes
+    (nome,email,telefone,data_cadastro)
+    VALUES
+    (?, ?, ?, CURDATE())
+  `;
+
+  db.query(
+    sql,
+    [nome, email, telefone],
+    (err, result) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json({
+        mensagem: "Cliente cadastrado",
+        id: result.insertId
+      });
+
+    }
+  );
+
+};

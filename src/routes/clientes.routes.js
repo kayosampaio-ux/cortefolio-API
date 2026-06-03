@@ -7,4 +7,6 @@ require("../controllers/clientes.controller");
 
 router.get("/", controller.listar);
 
+router.post("/", controller.criar);
+
 module.exports = router;
