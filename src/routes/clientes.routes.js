@@ -10,3 +10,6 @@ router.get("/", controller.listar);
 router.post("/", controller.criar);
 
 module.exports = router;
+
+const auth = require("../middleware/auth.middleware");
+router.get("/", auth, controller.listar);
