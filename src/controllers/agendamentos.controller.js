@@ -3,18 +3,21 @@ const db = require("../config/database");
 exports.listar = (req, res) => {
 
   const sql = `
-    SELECT
-      a.id,
-      c.nome AS cliente,
-      s.nome AS servico,
-      a.data_hora,
-      a.status
-    FROM agendamentos a
-    INNER JOIN clientes c
-      ON a.cliente_id = c.id
-    INNER JOIN servicos s
-      ON a.servico_id = s.id
-  `;
+  SELECT
+    a.id,
+    c.nome AS cliente,
+    s.nome AS servico,
+    p.nome AS profissional,
+    a.data_hora,
+    a.status
+  FROM agendamentos a
+  INNER JOIN clientes c
+    ON a.cliente_id = c.id
+  INNER JOIN servicos s
+    ON a.servico_id = s.id
+  INNER JOIN profissionais p
+    ON s.profissional_id = p.id
+`;
 
   db.query(sql, (err, results) => {
 
