@@ -22,7 +22,7 @@ exports.login = (req, res) => {
 
     const usuario = results[0];
 
-    // 🔐 VERIFICAÇÃO DA SENHA (AQUI É O PONTO PRINCIPAL)
+  
     const senhaValida = bcrypt.compareSync(
       senha,
       usuario.senha_hash
@@ -34,7 +34,7 @@ exports.login = (req, res) => {
       });
     }
 
-    // 🔑 GERAR TOKEN JWT
+    
     const token = jwt.sign(
       {
         id: usuario.id,
